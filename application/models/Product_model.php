@@ -33,47 +33,7 @@ class Product_model extends CI_Model {
             }
 
             $records = $this->db->get('products');
-            $response = $records->result_array();
-
-            $output = '';
-
-            foreach ($response as $product){
-                $stock = ($product['stock'] ? 'bg-success' : 'bg-danger');
-
-                $output .= '   
-                <div class="row mt-2 p-3 text-light product '. $stock .' " id="product" data-id=" '. $product['id'] .' ">
-                    <div class="name col-4">
-                        '. $product['name'] .'
-                    </div>
-        
-                    <div class="name col-2">
-                        '. $product['category'] .'
-                    </div>
-        
-                    <div class="price col-1">
-                        '. $product['price'] .'
-                    </div>
-        
-                    <div class="created_at col-2">
-                        '. $product['created_at'] .'
-                    </div>
-        
-                    <div class="stock col-2">
-                        <select class="form-select" aria-label="Default select example" id="productStock">
-                                <option disabled selected>Наличие</option>
-                                <option value="1">В наличии</option>
-                                <option value="0">Продано</option>
-                        </select>
-                    </div>
-        
-                    <div class="deleted col-1 text-center">
-                        <i class="fas fa-trash-alt" id="deleted"></i>
-                    </div>
-            </div>
-        ';
-
-            }
-            return $output;
+            return $response = $records->result_array();
         }
     }
 

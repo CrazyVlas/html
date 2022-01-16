@@ -53,7 +53,7 @@ class Product extends CI_Controller {
 
         // GET data
         $data = $this->product_model->getProductsSort($postData);
-
+        $data = json_encode($data);
         echo $data;
     }
 
@@ -98,7 +98,9 @@ class Product extends CI_Controller {
             echo validation_errors();
         } else {
             $this->product_model->addProduct($postData);
-                echo $this->product_model->getProductsSort($postData);
+                $data = $this->product_model->getProductsSort($postData);
+                $data = json_encode($data);
+                echo $data;
         }
     }
 }

@@ -125,6 +125,42 @@ opacity: 90%;
 
 
 <script>
+    function products(data) {
+        $('#products').html('');
+        data = JSON.parse(data);
+        $.each(data,function() {
+            let products = $('#products').append(` <div class="row mt-2 p-3 text-light product ${(+this.stock ?  'bg-success' : 'bg-danger')}" id="product" data-id="${this.id}">
+            <div class="name col-lg-4">
+                ${this.name}
+            </div>
+
+            <div class="name col-lg-2">
+                 ${this.category}
+            </div>
+
+            <div class="price col-lg-1">
+                  ${this.price}
+            </div>
+
+            <div class="created_at col-lg-2">
+                 ${this.created_at}
+            </div>
+
+            <div class="stock col-lg-2">
+                <select class="form-select" aria-label="Default select example" id="productStock">
+                        <option disabled selected>Наличие</option>
+                        <option value="1">В наличии</option>
+                        <option value="0">Продано</option>
+                </select>
+            </div>
+
+            <div class="deleted col-lg-1 text-center">
+                <i class="fas fa-trash-alt" id="deleted"></i>
+            </div>
+        </div>`);
+            return products;
+        });
+    }
 const BASE_URL = "<?php echo base_url();?>";
 
     <!-- Фильтр категории -->
@@ -140,8 +176,7 @@ const BASE_URL = "<?php echo base_url();?>";
                 stockFilter: stock,
             },
             success: function (data){
-                console.log(data);
-                $('#products').html(data);
+                products(data);
             }
         })
     });
@@ -158,9 +193,13 @@ const BASE_URL = "<?php echo base_url();?>";
                 categoryFilter: category,
                 stockFilter: stock,
             },
+            datatype: 'JSON',
+
             success: function (data){
-                $('#products').html(data);
-            }
+                products(data);
+                }
+
+
         })
     });
 
@@ -236,8 +275,8 @@ const BASE_URL = "<?php echo base_url();?>";
                 stockFilter: stockFilter,
             },
             success: function (data) {
-            if (category === categoryFilter || categoryFilter == 0){          
-                $('#products').html(data);
+            if (category === categoryFilter || categoryFilter == 0){
+                products(data);
             }
                 alert('Товар добавлен');
             }
